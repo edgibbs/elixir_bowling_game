@@ -4,7 +4,7 @@ defmodule BowlingGame do
     sum(frames)
   end
 
-  def sum(frames) do
+  defp sum(frames) do
     score_frames(frames)
   end
 
