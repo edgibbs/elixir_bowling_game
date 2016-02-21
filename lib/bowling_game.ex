@@ -9,10 +9,17 @@ defmodule BowlingGame do
   end
 
   defp score_frames([frame|rest_of_frames]) do
-    Enum.sum(frame) + score_frames(rest_of_frames)
+    score_frame(frame) + score_frames(rest_of_frames)
   end
 
   defp score_frames([]) do
     0
+  end
+
+  defp score_frame(frame) do
+    cond do
+      Enum.sum(frame) == 10 -> 13
+      true -> Enum.sum(frame)
+    end
   end
 end
