@@ -19,6 +19,10 @@ defmodule BowlingGameTest do
     assert score([10, 3, 3] ++ roll_many(16, 0)) == 22
   end
 
+  test "score a perfect game" do
+    assert score(roll_many(12, 10)) == 300
+  end
+
   defp roll_many(times, pins) do
     Enum.into(1..times, [], fn(_) -> pins end)
   end
