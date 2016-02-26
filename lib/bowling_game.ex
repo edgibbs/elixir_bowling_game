@@ -1,6 +1,5 @@
 defmodule BowlingGame do
   def score(rolls) do
-    frames = Enum.chunk(rolls, 2)
     frames = create_frames(rolls, [])
     score_frames(frames)
   end
@@ -16,12 +15,10 @@ defmodule BowlingGame do
   defp score_frame(frame, rest_of_frames) do
     following_rolls = List.flatten(rest_of_frames)
     cond do
-      frame == [10] && Enum.count(following_rolls) < 2 ->
-        0
-      frame == [10] ->
-        10 + Enum.sum(Enum.take(following_rolls, 2))
-      Enum.sum(frame) == 10 -> 10 + Enum.sum(Enum.take(following_rolls, 1))
-      true -> Enum.sum(frame)
+      strike_in_bonus?(frame, following_rolls) -> 0
+      strike?(frame) -> 10 + Enum.sum(Enum.take(following_rolls, 2))
+      spare?(frame) -> 10 + Enum.sum(Enum.take(following_rolls, 1))
+      leftover_pins -> Enum.sum(frame)
     end
   end
 
@@ -40,5 +37,21 @@ defmodule BowlingGame do
 
   defp create_frames([], frames) do
     Enum.reverse(frames)
+  end
+
+  defp strike?(frame) do
+    frame == [10]
+  end
+
+  defp spare?(frame) do
+    Enum.sum(frame) == 10
+  end
+
+  defp strike_in_bonus?(frame, following_rolls) do
+    frame == [10] && Enum.count(following_rolls) < 2
+  end
+
+  defp leftover_pins do
+    true
   end
 end
