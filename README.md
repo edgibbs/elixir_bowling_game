@@ -1,4 +1,3 @@
 BowlingGame
 ===========
 
-** TODO: Add description **
